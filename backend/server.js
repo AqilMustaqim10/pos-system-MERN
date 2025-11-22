@@ -111,6 +111,9 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import customerRoutes from "./routes/customerRoutes.js";
 import supplierRoutes from "./routes/supplierRoutes.js";
+import transactionRoutes from "./routes/transactionRoutes.js";
+import inventoryRoutes from "./routes/inventoryRoutes.js";
+import analyticsRoutes from "./routes/analyticsRoutes.js";
 
 // Use routes
 app.use("/api/auth", authRoutes);
@@ -118,11 +121,9 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/customers", customerRoutes);
 app.use("/api/suppliers", supplierRoutes);
-
-// Routes to be added in next phases:
-// app.use('/api/transactions', transactionRoutes);
-// app.use('/api/inventory', inventoryRoutes);
-// app.use('/api/analytics', analyticsRoutes);
+app.use("/api/transactions", transactionRoutes);
+app.use("/api/inventory", inventoryRoutes);
+app.use("/api/analytics", analyticsRoutes);
 
 // ============================================
 // 7. 404 HANDLER (Route Not Found)
