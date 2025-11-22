@@ -8,6 +8,11 @@ import {
   getLowStockProducts,
 } from "../controllers/productController.js";
 import { protect, authorize } from "../middleware/authMiddleware.js";
+import {
+  validateProductCreate,
+  validateMongoId,
+} from "../middleware/validationMiddleware.js";
+import { activityLoggerMiddleware } from "../middleware/activityLogger.js";
 
 const router = express.Router();
 
@@ -18,12 +23,30 @@ router.get("/alerts/low-stock", protect, getLowStockProducts);
 router
   .route("/")
   .get(protect, getProducts)
-  .post(protect, authorize("admin", "manager"), createProduct);
+  .post(
+    protect,
+    authorize("admin", "manager"),
+    validateProductCreate,
+    activityLoggerMiddleware("product", "create"),
+    createProduct
+  );
 
 router
   .route("/:id")
-  .get(protect, getProduct)
-  .put(protect, authorize("admin", "manager"), updateProduct)
-  .delete(protect, authorize("admin"), deleteProduct);
+  .get(protect, validateMongoId, getProduct)
+  .put(
+    protect,
+    authorize("admin", "manager"),
+    validateMongoId,
+    activityLoggerMiddleware("product", "update"),
+    updateProduct
+  )
+  .delete(
+    protect,
+    authorize("admin"),
+    validateMongoId,
+    activityLoggerMiddleware("product", "delete"),
+    deleteProduct
+  );
 
 export default router;
