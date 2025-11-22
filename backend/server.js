@@ -107,18 +107,21 @@ app.get("/api/health", (req, res) => {
 
 // Import route modules
 import authRoutes from "./routes/authRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
+import customerRoutes from "./routes/customerRoutes.js";
+import supplierRoutes from "./routes/supplierRoutes.js";
 
 // Use routes
 app.use("/api/auth", authRoutes);
+app.use("/api/categories", categoryRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/customers", customerRoutes);
+app.use("/api/suppliers", supplierRoutes);
 
 // Routes to be added in next phases:
-// app.use('/api/users', userRoutes);
-// app.use('/api/products', productRoutes);
-// app.use('/api/categories', categoryRoutes);
 // app.use('/api/transactions', transactionRoutes);
 // app.use('/api/inventory', inventoryRoutes);
-// app.use('/api/customers', customerRoutes);
-// app.use('/api/suppliers', supplierRoutes);
 // app.use('/api/analytics', analyticsRoutes);
 
 // ============================================
@@ -149,14 +152,14 @@ const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, () => {
   console.log(`
   ╔════════════════════════════════════════════════╗
-                                                  
-    🚀 SERVER RUNNING SUCCESSFULLY              
-                                                 
-    📍 Port:        ${PORT}                          
-    🌍 Environment: ${process.env.NODE_ENV || "development"}              
-    📊 API:         http://localhost:${PORT}/api    
-    ❤️  Health:      http://localhost:${PORT}/api/health 
-                                                  
+  ║                                                ║
+  ║   🚀 SERVER RUNNING SUCCESSFULLY              ║
+  ║                                                ║
+  ║   📍 Port:        ${PORT}                          ║
+  ║   🌍 Environment: ${process.env.NODE_ENV || "development"}              ║
+  ║   📊 API:         http://localhost:${PORT}/api    ║
+  ║   ❤️  Health:      http://localhost:${PORT}/api/health ║
+  ║                                                ║
   ╚════════════════════════════════════════════════╝
   `);
 });
@@ -186,3 +189,33 @@ process.on("SIGTERM", () => {
 
 // Export app for testing purposes
 export default app;
+
+/**
+ * ============================================
+ * SUMMARY - WHAT HAPPENS WHEN SERVER STARTS:
+ * ============================================
+ *
+ * 1. Load environment variables from .env
+ * 2. Create Express app
+ * 3. Connect to MongoDB database
+ * 4. Setup security middleware (helmet, CORS, sanitization)
+ * 5. Setup body parsing (to read JSON/form data)
+ * 6. Setup request logging (morgan)
+ * 7. Setup rate limiting (prevent abuse)
+ * 8. Define API routes
+ * 9. Setup error handling
+ * 10. Start listening on specified PORT
+ *
+ * ============================================
+ * HOW TO RUN:
+ * ============================================
+ *
+ * Development (auto-restart on changes):
+ *   npm run dev
+ *
+ * Production:
+ *   npm start
+ *
+ * Testing:
+ *   npm test
+ */
