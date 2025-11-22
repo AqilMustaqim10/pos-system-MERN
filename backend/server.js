@@ -1,6 +1,17 @@
+/**
+ * ============================================
+ * MAIN SERVER FILE
+ * ============================================
+ * This is the entry point of our backend application.
+ * It initializes Express, connects to MongoDB, and starts the server.
+ *
+ * Think of this as the "main kitchen" that coordinates everything.
+ */
+
 // ============================================
 // 1. IMPORT DEPENDENCIES
 // ============================================
+// Import required packages (like importing tools into your kitchen)
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -94,16 +105,21 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-// Import and use route modules (we'll create these files in next steps)
-// app.use('/api/auth', authRoutes);           // Authentication routes
-// app.use('/api/users', userRoutes);          // User management
-// app.use('/api/products', productRoutes);    // Product management
-// app.use('/api/categories', categoryRoutes); // Category management
-// app.use('/api/transactions', transactionRoutes); // POS transactions
-// app.use('/api/inventory', inventoryRoutes); // Inventory management
-// app.use('/api/customers', customerRoutes);  // Customer management
-// app.use('/api/suppliers', supplierRoutes);  // Supplier management
-// app.use('/api/analytics', analyticsRoutes); // Dashboard analytics
+// Import route modules
+import authRoutes from "./routes/authRoutes.js";
+
+// Use routes
+app.use("/api/auth", authRoutes);
+
+// Routes to be added in next phases:
+// app.use('/api/users', userRoutes);
+// app.use('/api/products', productRoutes);
+// app.use('/api/categories', categoryRoutes);
+// app.use('/api/transactions', transactionRoutes);
+// app.use('/api/inventory', inventoryRoutes);
+// app.use('/api/customers', customerRoutes);
+// app.use('/api/suppliers', supplierRoutes);
+// app.use('/api/analytics', analyticsRoutes);
 
 // ============================================
 // 7. 404 HANDLER (Route Not Found)
@@ -132,16 +148,16 @@ const PORT = process.env.PORT || 5000;
 // Start listening for requests
 const server = app.listen(PORT, () => {
   console.log(`
-  ════════════════════════════════════════════════════════════
+  ╔════════════════════════════════════════════════╗
                                                   
-     🚀 SERVER RUNNING SUCCESSFULLY              
-                                                  
-     📍 Port:        ${PORT}                          
-     🌍 Environment: ${process.env.NODE_ENV || "development"}          
-     📊 API:         http://localhost:${PORT}/api
-     ❤️  Health:      http://localhost:${PORT}/api/health
+    🚀 SERVER RUNNING SUCCESSFULLY              
                                                  
-  ════════════════════════════════════════════════════════════
+    📍 Port:        ${PORT}                          
+    🌍 Environment: ${process.env.NODE_ENV || "development"}              
+    📊 API:         http://localhost:${PORT}/api    
+    ❤️  Health:      http://localhost:${PORT}/api/health 
+                                                  
+  ╚════════════════════════════════════════════════╝
   `);
 });
 
