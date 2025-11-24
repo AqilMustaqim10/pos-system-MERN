@@ -102,14 +102,25 @@ const Dashboard = () => {
           </div>
 
           {/* Quick POS Button */}
-          <Button
-            onClick={() => navigate("/pos")}
-            size="lg"
-            className="hidden md:flex"
-          >
-            <ShoppingBag className="w-5 h-5 mr-2" />
-            Open POS
-          </Button>
+          <div className="flex space-x-3">
+            <Button
+              onClick={() => navigate("/pos")}
+              size="lg"
+              className="hidden md:flex"
+            >
+              <ShoppingBag className="w-5 h-5 mr-2" />
+              Open POS
+            </Button>
+            <Button
+              onClick={() => navigate("/products")}
+              variant="outline"
+              size="lg"
+              className="hidden md:flex"
+            >
+              <Package className="w-5 h-5 mr-2" />
+              Products
+            </Button>
+          </div>
         </div>
 
         {/* Stats Grid */}
