@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import Login from "./pages/auth/Login";
 import Dashboard from "./pages/dashboard/Dashboard";
+import POS from "./pages/pos/POS";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import useAuthStore from "./store/authStore";
 
@@ -60,6 +61,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/pos"
+            element={
+              <ProtectedRoute>
+                <POS />
               </ProtectedRoute>
             }
           />

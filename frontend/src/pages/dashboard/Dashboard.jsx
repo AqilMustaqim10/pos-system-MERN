@@ -91,13 +91,25 @@ const Dashboard = () => {
       {/* Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
-        <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">
-            Welcome back, {user?.name}! 👋
-          </h2>
-          <p className="text-gray-600 mt-1">
-            Here's what's happening with your store today.
-          </p>
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">
+              Welcome back, {user?.name}! 👋
+            </h2>
+            <p className="text-gray-600 mt-1">
+              Here's what's happening with your store today.
+            </p>
+          </div>
+
+          {/* Quick POS Button */}
+          <Button
+            onClick={() => navigate("/pos")}
+            size="lg"
+            className="hidden md:flex"
+          >
+            <ShoppingBag className="w-5 h-5 mr-2" />
+            Open POS
+          </Button>
         </div>
 
         {/* Stats Grid */}

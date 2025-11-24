@@ -4,8 +4,8 @@ const transactionSchema = new mongoose.Schema(
   {
     transactionNumber: {
       type: String,
-      required: true,
       unique: true,
+      // Removed 'required' - will be generated in pre-save hook
     },
     items: [
       {
@@ -99,7 +99,12 @@ const transactionSchema = new mongoose.Schema(
 
 // Auto-generate transaction number before save
 transactionSchema.pre("save", async function (next) {
-  if (!this.transactionNumber) {
+  // Only generate if transactionNumber doesn't exist
+  if (this.transactionNumber) {
+    return next();
+  }
+
+  try {
     const date = new Date();
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -107,11 +112,13 @@ transactionSchema.pre("save", async function (next) {
 
     // Find last transaction of the day
     const lastTransaction = await this.constructor
-      .findOne({ transactionNumber: new RegExp(`^TRX-${year}${month}${day}`) })
+      .findOne({
+        transactionNumber: new RegExp(`^TRX-${year}${month}${day}`),
+      })
       .sort({ transactionNumber: -1 });
 
     let sequence = 1;
-    if (lastTransaction) {
+    if (lastTransaction && lastTransaction.transactionNumber) {
       const lastSequence = parseInt(
         lastTransaction.transactionNumber.slice(-4)
       );
@@ -121,8 +128,10 @@ transactionSchema.pre("save", async function (next) {
     this.transactionNumber = `TRX-${year}${month}${day}-${String(
       sequence
     ).padStart(4, "0")}`;
+    next();
+  } catch (error) {
+    next(error);
   }
-  next();
 });
 
 const Transaction = mongoose.model("Transaction", transactionSchema);
