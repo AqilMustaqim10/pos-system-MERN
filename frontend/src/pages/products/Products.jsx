@@ -1,25 +1,17 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
-import {
-  ArrowLeft,
-  Plus,
-  Edit,
-  Trash2,
-  Package,
-  AlertTriangle,
-} from "lucide-react";
+import { Plus, Edit, Trash2, AlertTriangle } from "lucide-react";
 import toast from "react-hot-toast";
 import productService from "../../services/productService";
+import Layout from "../../components/layout/Layout";
 import Button from "../../components/ui/Button";
 import Input from "../../components/ui/Input";
-import Table from "../../components/ui/table";
+import Table from "../../components/ui/Table";
 import Modal from "../../components/ui/Modal";
 import ProductForm from "../../components/products/ProductForm";
 import Card from "../../components/ui/Card";
 
 const Products = () => {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -190,36 +182,19 @@ const Products = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => navigate("/dashboard")}
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back
-              </Button>
-              <div className="flex items-center space-x-2">
-                <Package className="w-6 h-6 text-primary-600" />
-                <h1 className="text-xl font-bold text-gray-900">Products</h1>
-              </div>
-            </div>
-
-            <Button onClick={handleAdd}>
-              <Plus className="w-4 h-4 mr-2" />
-              Add Product
-            </Button>
+    <Layout>
+      <div className="p-8">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Products</h1>
+            <p className="text-gray-600 mt-1">Manage your product inventory</p>
           </div>
+          <Button onClick={handleAdd}>
+            <Plus className="w-4 h-4 mr-2" />
+            Add Product
+          </Button>
         </div>
-      </header>
-
-      {/* Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Search */}
         <Card className="mb-6">
           <Input
@@ -238,7 +213,7 @@ const Products = () => {
             emptyMessage="No products found. Add your first product!"
           />
         </Card>
-      </main>
+      </div>
 
       {/* Add/Edit Modal */}
       <Modal
@@ -283,7 +258,7 @@ const Products = () => {
           </div>
         </div>
       </Modal>
-    </div>
+    </Layout>
   );
 };
 

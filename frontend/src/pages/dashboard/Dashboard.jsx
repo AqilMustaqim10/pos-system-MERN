@@ -1,18 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import {
-  LogOut,
-  ShoppingBag,
-  TrendingUp,
-  Package,
-  Users,
-  AlertTriangle,
-} from "lucide-react";
+import { TrendingUp, Package, Users, AlertTriangle } from "lucide-react";
 import useAuthStore from "../../store/authStore";
 import analyticsService from "../../services/analyticsService";
 import transactionService from "../../services/transactionService";
 import productService from "../../services/productService";
-import Button from "../../components/ui/Button";
+import Layout from "../../components/layout/Layout";
 import StatCard from "../../components/dashboard/StatCard";
 import SalesChart from "../../components/dashboard/SalesChart";
 import RecentTransactions from "../../components/dashboard/RecentTransactions";
@@ -20,7 +13,7 @@ import LowStockAlert from "../../components/dashboard/LowStockAlert";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user, logout } = useAuthStore();
+  const { user } = useAuthStore();
 
   // Fetch dashboard data
   const { data: dashboardData, isLoading: loadingDashboard } = useQuery({
@@ -46,81 +39,22 @@ const Dashboard = () => {
     queryFn: productService.getLowStock,
   });
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
-
   const stats = dashboardData?.data || {};
   const salesChartData = salesData?.data || [];
   const transactions = transactionsData?.data || [];
   const lowStockProducts = lowStockData?.data || [];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
-                <ShoppingBag className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">POS System</h1>
-                <p className="text-xs text-gray-500">Inventory Management</p>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-4">
-              <div className="text-right">
-                <p className="text-sm font-medium text-gray-900">
-                  {user?.name}
-                </p>
-                <p className="text-xs text-gray-500 capitalize">{user?.role}</p>
-              </div>
-              <Button variant="outline" size="sm" onClick={handleLogout}>
-                <LogOut className="w-4 h-4 mr-2" />
-                Logout
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <Layout>
+      <div className="p-8">
         {/* Welcome Section */}
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">
-              Welcome back, {user?.name}! 👋
-            </h2>
-            <p className="text-gray-600 mt-1">
-              Here's what's happening with your store today.
-            </p>
-          </div>
-
-          {/* Quick POS Button */}
-          <div className="flex space-x-3">
-            <Button
-              onClick={() => navigate("/pos")}
-              size="lg"
-              className="hidden md:flex"
-            >
-              <ShoppingBag className="w-5 h-5 mr-2" />
-              Open POS
-            </Button>
-            <Button
-              onClick={() => navigate("/products")}
-              variant="outline"
-              size="lg"
-              className="hidden md:flex"
-            >
-              <Package className="w-5 h-5 mr-2" />
-              Products
-            </Button>
-          </div>
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-900">
+            Welcome back, {user?.name}! 👋
+          </h2>
+          <p className="text-gray-600 mt-1">
+            Here's what's happening with your store today.
+          </p>
         </div>
 
         {/* Stats Grid */}
@@ -176,8 +110,8 @@ const Dashboard = () => {
           transactions={transactions}
           loading={loadingTransactions}
         />
-      </main>
-    </div>
+      </div>
+    </Layout>
   );
 };
 
