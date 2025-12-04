@@ -7,6 +7,7 @@ import POS from "./pages/pos/POS";
 import Products from "./pages/products/Products";
 import Customers from "./pages/customers/Customers";
 import Transactions from "./pages/transactions/Transactions";
+import Reports from "./pages/reports/Reports";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import useAuthStore from "./store/authStore";
 
@@ -100,6 +101,15 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={["admin", "manager"]}>
                 <Transactions />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/reports"
+            element={
+              <ProtectedRoute allowedRoles={["admin", "manager"]}>
+                <Reports />
               </ProtectedRoute>
             }
           />
