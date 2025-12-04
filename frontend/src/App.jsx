@@ -6,6 +6,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import POS from "./pages/pos/POS";
 import Products from "./pages/products/Products";
 import Customers from "./pages/customers/Customers";
+import Transactions from "./pages/transactions/Transactions";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import useAuthStore from "./store/authStore";
 
@@ -90,6 +91,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <Customers />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/transactions"
+            element={
+              <ProtectedRoute allowedRoles={["admin", "manager"]}>
+                <Transactions />
               </ProtectedRoute>
             }
           />
